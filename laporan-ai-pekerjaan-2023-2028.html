@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI & Pekerjaan 2023–2028</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --bg: #F5F2EB;
+  --bg2: #EDE9DF;
+  --ink: #1A1714;
+  --ink2: #4A4540;
+  --ink3: #8C8078;
+  --red: #C84B2F;
+  --red-light: #F5DDD7;
+  --green: #2E6B3E;
+  --green-light: #D4EAD9;
+  --amber: #B5760A;
+  --amber-light: #FAF0D0;
+  --blue: #1E4FA0;
+  --blue-light: #D8E4F5;
+  --accent: #C84B2F;
+  --border: rgba(26,23,20,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.65;
+}
+h1,h2,h3,h4 { font-family: 'Syne', sans-serif; }
+
+/* COVER */
+.cover {
+  min-height: 100vh;
+  background: var(--ink);
+  color: #F5F2EB;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 60px;
+  position: relative;
+  overflow: hidden;
+}
+.cover-grid {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.06;
+  background-image: repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 60px),
+    repeating-linear-gradient(90deg, #fff 0px, #fff 1px, transparent 1px, transparent 60px);
+}
+.cover-badge {
+  display: inline-block;
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 6px 14px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: 'Syne', sans-serif;
+  margin-bottom: 32px;
+  width: fit-content;
+}
+.cover h1 {
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+.cover h1 span { color: #C84B2F; }
+.cover-sub {
+  font-size: 18px;
+  color: rgba(245,242,235,0.65);
+  max-width: 480px;
+  font-weight: 300;
+  margin-bottom: 48px;
+}
+.cover-meta {
+  display: flex;
+  gap: 48px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  padding-top: 32px;
+}
+.cover-meta-item .label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,242,235,0.4); margin-bottom: 4px; }
+.cover-meta-item .val { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; }
+.cover-number {
+  position: absolute;
+  right: 60px;
+  top: 60px;
+  font-family: 'Syne', sans-serif;
+  font-size: 220px;
+  font-weight: 800;
+  opacity: 0.04;
+  line-height: 1;
+  user-select: none;
+}
+
+/* LAYOUT */
+.page { max-width: 860px; margin: 0 auto; padding: 80px 40px; }
+.section { margin-bottom: 80px; }
+.section-label {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  font-family: 'Syne', sans-serif;
+  margin-bottom: 12px;
+}
+.section h2 {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+.section p {
+  color: var(--ink2);
+  max-width: 620px;
+  margin-bottom: 12px;
+}
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin: 80px 0;
+}
+
+/* HIGHLIGHT STATS */
+.stat-band {
+  background: var(--ink);
+  color: #F5F2EB;
+  padding: 56px 60px;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 32px;
+}
+.stat-item .num {
+  font-family: 'Syne', sans-serif;
+  font-size: 52px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #C84B2F;
+  line-height: 1;
+}
+.stat-item .desc {
+  font-size: 13px;
+  color: rgba(245,242,235,0.55);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+/* TIMELINE */
+.timeline { position: relative; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 72px;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+.tl-item {
+  display: grid;
+  grid-template-columns: 144px 1fr;
+  gap: 32px;
+  margin-bottom: 48px;
+  position: relative;
+}
+.tl-year {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink3);
+  text-align: right;
+  padding-right: 24px;
+  padding-top: 2px;
+  position: relative;
+}
+.tl-year::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 10px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 2px solid var(--bg);
+  outline: 1px solid var(--ink);
+}
+.tl-year.future { color: var(--ink3); }
+.tl-year.future::after { background: var(--bg); border-color: var(--ink3); }
+.tl-content { padding-top: 0; }
+.tl-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.tl-desc { font-size: 14px; color: var(--ink2); line-height: 1.6; margin-bottom: 12px; }
+.tl-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+.tag-red { background: var(--red-light); color: var(--red); }
+.tag-green { background: var(--green-light); color: var(--green); }
+.tag-amber { background: var(--amber-light); color: var(--amber); }
+.tag-blue { background: var(--blue-light); color: var(--blue); }
+.tl-stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 10px;
+  background: var(--bg2);
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+.tl-stat .n { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; }
+.tl-stat .l { font-size: 12px; color: var(--ink3); }
+
+/* JOB CARDS */
+.job-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 32px;
+}
+.job-panel {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.job-panel-header {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.job-panel-header.danger { background: var(--red-light); }
+.job-panel-header.safe { background: var(--green-light); }
+.job-panel-icon { font-size: 18px; }
+.job-panel-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+}
+.job-panel-header.danger .job-panel-title { color: var(--red); }
+.job-panel-header.safe .job-panel-title { color: var(--green); }
+.job-list { padding: 4px 0; }
+.job-row {
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.job-row:last-child { border-bottom: none; }
+.job-row-name { font-size: 13px; font-weight: 500; }
+.job-row-sub { font-size: 11px; color: var(--ink3); margin-top: 1px; }
+.risk-pill {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-weight: 500;
+}
+.risk-high { background: var(--red-light); color: var(--red); }
+.risk-mid { background: var(--amber-light); color: var(--amber); }
+.risk-safe { background: var(--green-light); color: var(--green); }
+.risk-grow { background: var(--blue-light); color: var(--blue); }
+
+/* CHART SECTION */
+.chart-wrap {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  margin-top: 32px;
+}
+.chart-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.chart-sub { font-size: 13px; color: var(--ink3); margin-bottom: 24px; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink2); }
+.legend-swatch { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+
+/* RISK MATRIX */
+.matrix {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 32px;
+}
+.matrix-cell {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  background: white;
+}
+.matrix-cell-label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'Syne', sans-serif;
+  margin-bottom: 12px;
+}
+.matrix-cell.red .matrix-cell-label { color: var(--red); }
+.matrix-cell.amber .matrix-cell-label { color: var(--amber); }
+.matrix-cell.green .matrix-cell-label { color: var(--green); }
+.matrix-cell ul { list-style: none; }
+.matrix-cell ul li {
+  font-size: 13px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink2);
+}
+.matrix-cell ul li:last-child { border-bottom: none; }
+.matrix-cell ul li::before { content: '·  '; color: var(--ink3); }
+
+/* WHAT MAKES SAFE SECTION */
+.traits-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 32px;
+}
+.trait-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.trait-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--green-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.trait-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.trait-desc { font-size: 13px; color: var(--ink2); line-height: 1.5; }
+
+/* PROJECTION BAND */
+.projection {
+  background: var(--ink);
+  color: #F5F2EB;
+  padding: 56px 60px;
+  margin: 0 -60px;
+}
+.proj-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 32px;
+  letter-spacing: -0.02em;
+}
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.proj-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 20px;
+}
+.proj-year { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: #C84B2F; margin-bottom: 8px; }
+.proj-head { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+.proj-body { font-size: 12px; color: rgba(245,242,235,0.5); line-height: 1.5; }
+
+/* CONCLUSION */
+.conclusion {
+  background: var(--red);
+  color: white;
+  padding: 60px;
+  margin: 0 -60px;
+}
+.conclusion h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+  color: white;
+}
+.conclusion p { color: rgba(255,255,255,0.8); max-width: 560px; margin-bottom: 12px; }
+.conclusion-tips { margin-top: 32px; display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.tip {
+  border-top: 2px solid rgba(255,255,255,0.3);
+  padding-top: 16px;
+}
+.tip-num { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; opacity: 0.3; line-height: 1; margin-bottom: 8px; }
+.tip-text { font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.5; }
+
+/* SOURCES */
+.sources {
+  padding: 40px 60px 60px;
+  background: var(--bg2);
+}
+.sources h4 { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 12px; color: var(--ink3); letter-spacing: 0.1em; text-transform: uppercase; }
+.source-list { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.source-list li {
+  font-size: 11px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 4px 12px;
+  border-radius: 20px;
+  color: var(--ink3);
+}
+
+/* FULL-WIDTH WRAPPERS */
+.full-bleed { margin: 0 -40px; }
+
+@media (max-width: 680px) {
+  .page { padding: 60px 24px; }
+  .stat-band { grid-template-columns: 1fr; padding: 40px 24px; }
+  .job-grid { grid-template-columns: 1fr; }
+  .matrix { grid-template-columns: 1fr; }
+  .traits-grid { grid-template-columns: 1fr; }
+  .proj-grid { grid-template-columns: 1fr; }
+  .conclusion-tips { grid-template-columns: 1fr; }
+  .cover { padding: 40px 24px; }
+  .cover-meta { flex-direction: column; gap: 16px; }
+  .tl-item { grid-template-columns: 80px 1fr; gap: 16px; }
+  .timeline::before { left: 40px; }
+  .projection { margin: 0 -24px; padding: 40px 24px; }
+  .conclusion { margin: 0 -24px; padding: 40px 24px; }
+  .sources { padding: 32px 24px 40px; }
+}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-grid"></div>
+  <div class="cover-number">AI</div>
+  <div class="cover-badge">Laporan Riset · 2025</div>
+  <h1>AI & <span>Pasar<br>Kerja</span><br>Global</h1>
+  <p class="cover-sub">Peta lengkap pekerjaan yang tergantikan dan yang bertahan dari gempuran kecerdasan buatan, 2023–2028.</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <div class="label">Periode</div>
+      <div class="val">2023 – 2028</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">Sumber Utama</div>
+      <div class="val">WEF · Goldman Sachs · McKinsey</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">Net Pekerjaan Baru</div>
+      <div class="val">+78 Juta</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="page">
+
+  <!-- INTRO -->
+  <div class="section" style="padding-top: 20px;">
+    <div class="section-label">Pengantar</div>
+    <h2>AI tidak sekadar menggantikan pekerjaan — ia mendefinisikan ulang cara kerja manusia.</h2>
+    <p>Sejak ChatGPT meledak pada 2023, kekhawatiran soal otomasi pekerjaan menjadi global. Namun data dari lembaga riset terkredibel dunia menunjukkan gambaran yang lebih kompleks: AI memang menggusur banyak peran rutin, tetapi sekaligus melahirkan jutaan peran baru yang belum pernah ada sebelumnya.</p>
+    <p>Laporan ini merangkum perkembangan tiap tahun, dilengkapi data konkret dan proyeksi hingga 2028.</p>
+  </div>
+
+  <!-- KEY STATS -->
+  <div class="full-bleed">
+    <div class="stat-band">
+      <div class="stat-item">
+        <div class="num">+78 jt</div>
+        <div class="desc">Net penambahan pekerjaan baru secara global hingga 2030 (WEF, Jan 2025)</div>
+      </div>
+      <div class="stat-item">
+        <div class="num">56%</div>
+        <div class="desc">Premium gaji bagi pekerja yang kuasai skill AI vs yang tidak (PwC, 2025)</div>
+      </div>
+      <div class="stat-item">
+        <div class="num">22%</div>
+        <div class="desc">Proporsi pekerjaan yang akan terdisrupsi secara signifikan pada 2030 (WEF)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CHART: PHK vs Job Creation -->
+  <div class="section">
+    <div class="section-label">Infografis 01</div>
+    <h2>PHK vs Penciptaan Pekerjaan AI, 2023–2026</h2>
+    <p>Meski PHK terkait AI terus naik, pekerjaan baru berbasis AI tumbuh jauh lebih cepat. Data ini khusus pasar AS.</p>
+    <div class="chart-wrap">
+      <div class="chart-title">Jumlah Pekerjaan Terpengaruh AI (dalam ribuan, AS)</div>
+      <div class="chart-sub">PHK langsung vs pekerjaan baru terkait AI — Sumber: ITIF, Challenger Gray & Christmas, BLS</div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-swatch" style="background:#C84B2F"></div>PHK terkait AI</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:#2E6B3E"></div>Pekerjaan AI baru</div>
+      </div>
+      <div style="position:relative;width:100%;height:280px;">
+        <canvas id="chart1" role="img" aria-label="Bar chart PHK vs penciptaan pekerjaan AI 2023 sampai 2026">PHK 2023: 3.9 ribu, 2024: 12.7 ribu, 2025: 55 ribu, 2026: 32 ribu (partial); Pekerjaan baru 2024: 119.9 ribu.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHART: Exposure by sector -->
+  <div class="section">
+    <div class="section-label">Infografis 02</div>
+    <h2>Tingkat Eksposur AI per Sektor Pekerjaan</h2>
+    <p>Tidak semua industri sama terdampaknya. Sektor padat pengetahuan terstruktur lebih rentan dibanding pekerjaan fisik dan relasional.</p>
+    <div class="chart-wrap">
+      <div class="chart-title">Estimasi % Tugas yang Dapat Diotomasi AI per Sektor</div>
+      <div class="chart-sub">Sumber: Goldman Sachs (2023 & 2025), McKinsey Global Institute (2024)</div>
+      <div style="position:relative;width:100%;height:320px;">
+        <canvas id="chart2" role="img" aria-label="Horizontal bar chart eksposur AI per sektor">Data entry 95%, Customer service 80%, Finance & accounting 65%, Legal 55%, Kreatif dasar 50%, Healthcare admin 45%, Software dev 40%, Education 25%, Skilled trades 15%, Healthcare klinis 12%.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHART: Net jobs 2030 -->
+  <div class="section">
+    <div class="section-label">Infografis 03</div>
+    <h2>Proyeksi WEF 2030: Terdisplasi vs Tercipta</h2>
+    <p>World Economic Forum memproyeksikan lebih banyak peran baru yang lahir dibanding yang hilang — namun transisinya membutuhkan reskilling masif.</p>
+    <div class="chart-wrap">
+      <div class="chart-title">Proyeksi Global Pekerjaan 2030 (juta)</div>
+      <div class="chart-sub">Sumber: WEF Future of Jobs Report 2025 — survei 1.000+ perusahaan dari 55 ekonomi</div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-swatch" style="background:#C84B2F"></div>Terdisplasi: 92 juta</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:#2E6B3E"></div>Tercipta: 170 juta</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:#1E4FA0"></div>Net gain: +78 juta</div>
+      </div>
+      <div style="position:relative;width:100%;height:220px;">
+        <canvas id="chart3" role="img" aria-label="Doughnut chart proyeksi pekerjaan 2030 WEF">Terdisplasi 92 juta, Tercipta 170 juta, Net gain 78 juta.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TIMELINE -->
+  <div class="section">
+    <div class="section-label">Perkembangan Per Tahun</div>
+    <h2>Kronologi Dampak AI<br>terhadap Pasar Kerja</h2>
+    <p>Dari ledakan ChatGPT hingga proyeksi ekuilibrium baru — inilah yang terjadi setiap tahunnya.</p>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">2023</div>
+      <div class="tl-content">
+        <div class="tl-title">Titik Ledakan Generative AI</div>
+        <div class="tl-stat"><span class="n">3.900</span><span class="l">PHK langsung terkait AI (AS, Mei)</span></div>
+        <div class="tl-stat"><span class="n">37%</span><span class="l">perusahaan sudah ganti peran via AI</span></div>
+        <div class="tl-desc">GPT-4 dirilis massal. Goldman Sachs memperingatkan 300 juta pekerjaan terekspos AI secara global. Dampak awal terasa di data entry, customer service, dan penulisan konten. Namun PHK aktual masih terbatas.</div>
+        <div class="tl-tags">
+          <span class="tag tag-red">Data entry terdampak</span>
+          <span class="tag tag-red">Copywriter rentan</span>
+          <span class="tag tag-green">Prompt engineer lahir</span>
+          <span class="tag tag-amber">Mayoritas perusahaan masih eksplorasi</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-year">2024</div>
+      <div class="tl-content">
+        <div class="tl-title">Akselerasi Adopsi Enterprise</div>
+        <div class="tl-stat"><span class="n">119.900</span><span class="l">pekerjaan AI baru diciptakan (AS)</span></div>
+        <div class="tl-stat"><span class="n">66%</span><span class="l">perusahaan kurangi rekrut entry-level</span></div>
+        <div class="tl-desc">AI mulai masuk sektor hukum, keuangan, dan kreatif. Perusahaan besar adopsi LLM untuk operasional. Peran baru meledak: AI engineer, prompt specialist, data curator. Entry-level paling tertekan.</div>
+        <div class="tl-tags">
+          <span class="tag tag-red">Paralegal terancam</span>
+          <span class="tag tag-red">Teller bank -15% proyeksi</span>
+          <span class="tag tag-green">AI/ML Engineer meledak</span>
+          <span class="tag tag-green">Nurse practitioner +52%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-year">2025</div>
+      <div class="tl-content">
+        <div class="tl-title">Era AI Agents & Mass Reskilling</div>
+        <div class="tl-stat"><span class="n">55.000</span><span class="l">PHK terkait AI (AS, tertinggi sejak 2020)</span></div>
+        <div class="tl-stat"><span class="n">58 juta</span><span class="l">pekerja global ikuti sertifikasi AI</span></div>
+        <div class="tl-desc">Amazon PHK 14.000 posisi korporat; Workday kurangi 1.750 staf karena AI. WEF: 41% organisasi rencanakan pengurangan tenaga di peran terekspos. Sekaligus, 46% perusahaan luncurkan program upskilling internal AI.</div>
+        <div class="tl-tags">
+          <span class="tag tag-red">HR admin terotomasi</span>
+          <span class="tag tag-red">QA manual terancam</span>
+          <span class="tag tag-green">AI Ethics officer muncul</span>
+          <span class="tag tag-blue">Reskilling jadi prioritas utama</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-year">2026</div>
+      <div class="tl-content">
+        <div class="tl-title">Paradoks Pasar Kerja</div>
+        <div class="tl-stat"><span class="n">4,9%</span><span class="l">unemployment OECD — stabil rendah</span></div>
+        <div class="tl-stat"><span class="n">94%</span><span class="l">pemimpin laporkan kekurangan skill AI</span></div>
+        <div class="tl-desc">Paradoks: unemployment rendah, tapi di baliknya ada overcapacity 20% di legacy roles dan kekurangan parah skill AI. Pasar kerja terpolarisasi antara yang "AI-ready" dan yang tertinggal.</div>
+        <div class="tl-tags">
+          <span class="tag tag-red">Jurnalis konten massal terancam</span>
+          <span class="tag tag-green">Green energy technician tumbuh</span>
+          <span class="tag tag-green">Human-AI specialist lahir</span>
+          <span class="tag tag-blue">Skill AI premium 56% gaji</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-year future">2027</div>
+      <div class="tl-content">
+        <div class="tl-title">Proyeksi: Displacement Bersih & Restrukturisasi</div>
+        <div class="tl-stat"><span class="n">14 juta</span><span class="l">net displacement global (proyeksi WEF)</span></div>
+        <div class="tl-stat"><span class="n">86%</span><span class="l">bisnis terdampak AI & information processing</span></div>
+        <div class="tl-desc">McKinsey proyeksikan 30–50% aktivitas kerja terotomasi. Peran yang bertahan adalah yang menggabungkan domain expertise dengan kemampuan berkolaborasi dengan AI tools secara produktif.</div>
+        <div class="tl-tags">
+          <span class="tag tag-red">Financial analyst mid-level terancam</span>
+          <span class="tag tag-red">Sekretaris eksekutif terancam</span>
+          <span class="tag tag-green">AI infrastructure engineer meledak</span>
+          <span class="tag tag-amber">Radiologis: risiko sedang</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-year future">2028</div>
+      <div class="tl-content">
+        <div class="tl-title">Proyeksi: Ekuilibrium Baru Pasar Kerja</div>
+        <div class="tl-stat"><span class="n">170 juta</span><span class="l">peran baru tercipta global (WEF)</span></div>
+        <div class="tl-stat"><span class="n">92 juta</span><span class="l">peran terdisplasi — net +78 juta</span></div>
+        <div class="tl-desc">Mayoritas pekerja ekspektasi AI mengubah, bukan menghilangkan, pekerjaan mereka (Statista). Peran hybrid manusia-AI menjadi standar industri. Pekerja care economy dan green transition jadi yang paling dibutuhkan.</div>
+        <div class="tl-tags">
+          <span class="tag tag-red">Semua peran rutin teks terotomasi</span>
+          <span class="tag tag-green">AI trainer & evaluator tumbuh pesat</span>
+          <span class="tag tag-green">Care economy makin krusial</span>
+          <span class="tag tag-green">Green transition specialist meledak</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- JOB MATRIX -->
+  <div class="section">
+    <div class="section-label">Infografis 04</div>
+    <h2>Peta Risiko Pekerjaan</h2>
+    <p>Dikelompokkan berdasarkan tingkat risiko penggantian oleh AI menurut data gabungan Oxford, WEF, dan McKinsey.</p>
+
+    <div class="matrix">
+      <div class="matrix-cell red">
+        <div class="matrix-cell-label">🔴 Risiko Tinggi</div>
+        <ul>
+          <li>Data entry & klerk</li>
+          <li>Telemarketer</li>
+          <li>Kasir & teller bank</li>
+          <li>Customer service tier-1</li>
+          <li>Medical transcriptionist</li>
+          <li>Operator gudang rutin</li>
+          <li>Asuransi klerk standar</li>
+          <li>Sekretaris & asisten admin</li>
+          <li>Content moderator</li>
+          <li>Jurnalis konten massal</li>
+        </ul>
+      </div>
+      <div class="matrix-cell amber">
+        <div class="matrix-cell-label">🟡 Risiko Sedang</div>
+        <ul>
+          <li>Paralegal & legal researcher</li>
+          <li>Desainer grafis (entry)</li>
+          <li>QA tester software manual</li>
+          <li>Junior software developer</li>
+          <li>Manajer project junior</li>
+          <li>Sopir & kurir (urban)</li>
+          <li>Compliance officer rutin</li>
+          <li>Radiologis (beberapa tugas)</li>
+          <li>Operator manufaktur adaptif</li>
+        </ul>
+      </div>
+      <div class="matrix-cell green">
+        <div class="matrix-cell-label">🟢 Risiko Rendah / Tumbuh</div>
+        <ul>
+          <li>Perawat & tenaga medis</li>
+          <li>Skilled trades (teknisi)</li>
+          <li>Psikolog & terapis</li>
+          <li>AI/ML Engineer</li>
+          <li>Cybersecurity analyst</li>
+          <li>AI Ethics & Governance</li>
+          <li>Guru & dosen</li>
+          <li>Peneliti & ilmuwan</li>
+          <li>Green energy technician</li>
+          <li>AI trainer & evaluator</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT KEEPS YOU SAFE -->
+  <div class="section">
+    <div class="section-label">Infografis 05</div>
+    <h2>5 Karakteristik Pekerja yang<br>Paling Tahan terhadap AI</h2>
+    <p>Berdasarkan konsensus Goldman Sachs, McKinsey, WEF, dan Oxford University — inilah traits yang melindungi pekerja dari disrupsi AI.</p>
+
+    <div class="traits-grid">
+      <div class="trait-card">
+        <div class="trait-icon">🧠</div>
+        <div>
+          <div class="trait-title">Berpikir Kritis & Analitik</div>
+          <div class="trait-desc">Kemampuan mengevaluasi informasi kompleks, mendeteksi anomali, dan membuat keputusan di luar pola yang sudah terprogram.</div>
+        </div>
+      </div>
+      <div class="trait-card">
+        <div class="trait-icon">🤝</div>
+        <div>
+          <div class="trait-title">Kecerdasan Sosial & Emosional</div>
+          <div class="trait-desc">Empati, membangun kepercayaan, mengelola konflik, dan memimpin manusia — hal yang AI belum bisa replikasi secara autentik.</div>
+        </div>
+      </div>
+      <div class="trait-card">
+        <div class="trait-icon">💡</div>
+        <div>
+          <div class="trait-title">Kreativitas & Problem Solving Kompleks</div>
+          <div class="trait-desc">Menghasilkan solusi orisinal di konteks ambigu, bukan hanya mengoptimasi solusi yang sudah ada.</div>
+        </div>
+      </div>
+      <div class="trait-card">
+        <div class="trait-icon">🔄</div>
+        <div>
+          <div class="trait-title">Adaptabilitas & AI Literacy</div>
+          <div class="trait-desc">Mampu belajar tools AI baru dengan cepat dan mengintegrasikannya dalam workflow — bukan menghindarinya. Skill AI = premium gaji 56%.</div>
+        </div>
+      </div>
+      <div class="trait-card" style="grid-column: 1 / -1;">
+        <div class="trait-icon">🌐</div>
+        <div>
+          <div class="trait-title">Cross-functional Expertise (T-shaped skills)</div>
+          <div class="trait-desc">Kombinasi keahlian mendalam di satu domain + kemampuan berkolaborasi lintas fungsi. AI tidak bisa mereplikasi pemahaman konteks bisnis yang terintegrasi.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- PROJECTION BAND -->
+<div style="padding: 0 40px;">
+  <div class="projection">
+    <div class="proj-title">Proyeksi Kunci 2026–2028</div>
+    <div class="proj-grid">
+      <div class="proj-card">
+        <div class="proj-year">2026–2027</div>
+        <div class="proj-head">Polarisasi pasar kerja melebar</div>
+        <div class="proj-body">Pekerja yang kuasai AI vs yang tidak akan punya gap penghasilan sangat besar. 94% pemimpin bisnis sudah merasakan kekurangan AI skill.</div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-year">2027–2028</div>
+        <div class="proj-head">Reskilling jadi keharusan industri</div>
+        <div class="proj-body">59% pekerja global perlu reskilling atau upskilling signifikan. 46% perusahaan sudah luncurkan program internal. Mereka yang tidak bergerak akan tertinggal.</div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-year">2028+</div>
+        <div class="proj-head">Net positif, tapi ada korban transisi</div>
+        <div class="proj-body">WEF proyeksikan +78 juta pekerjaan baru net global. Namun 92 juta yang terdisplasi perlu waktu dan dukungan untuk berpindah ke peran baru.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONCLUSION -->
+<div style="padding: 0 40px;">
+  <div class="conclusion">
+    <div class="section-label" style="color:rgba(255,255,255,0.5); margin-bottom: 12px;">Kesimpulan & Rekomendasi</div>
+    <h2>AI bukan ancaman bagi pekerja —<br>tapi bagi pekerja yang tidak bersiap.</h2>
+    <p>Data dari 2023 hingga proyeksi 2028 menunjukkan satu pola konsisten: AI memang menggusur pekerjaan rutin dan berbasis teks, tetapi sekaligus menciptakan peran baru yang lebih bernilai tinggi dan membutuhkan keahlian manusia yang unik.</p>
+    <p>Kuncinya bukan "melawan AI" melainkan belajar berkolaborasi dengan AI secepat mungkin.</p>
+    <div class="conclusion-tips">
+      <div class="tip">
+        <div class="tip-num">01</div>
+        <div class="tip-text">Identifikasi bagian pekerjaan Anda yang bersifat rutin dan terstruktur — itulah yang paling cepat terotomasi. Fokuskan energi ke bagian yang butuh judgment dan kreativitas.</div>
+      </div>
+      <div class="tip">
+        <div class="tip-num">02</div>
+        <div class="tip-text">Investasikan waktu untuk menguasai minimal satu AI tool yang relevan dengan bidang Anda. Skill AI memberi premium gaji 56% dibanding rekan yang tidak punya.</div>
+      </div>
+      <div class="tip">
+        <div class="tip-num">03</div>
+        <div class="tip-text">Perkuat "human skills" — empati, kepemimpinan, kreativitas, dan komunikasi kompleks. Inilah yang paling sulit direplikasi AI dan paling dibutuhkan industri hingga 2030.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOURCES -->
+<div class="sources">
+  <h4>Sumber Referensi</h4>
+  <ul class="source-list">
+    <li>WEF Future of Jobs Report 2025</li>
+    <li>Goldman Sachs Global Research (2023, 2025)</li>
+    <li>McKinsey Global Institute (2024)</li>
+    <li>PwC Global AI Jobs Barometer (2025)</li>
+    <li>Harvard Business School Working Paper (Feb 2026)</li>
+    <li>Challenger Gray & Christmas (2025)</li>
+    <li>BLS Occupational Outlook Handbook</li>
+    <li>ITIF — IT Innovation Foundation</li>
+    <li>IBM 2023 Workforce Study</li>
+    <li>Oxford University — Frey & Osborne Automation Risk</li>
+    <li>Statista Workforce Survey (2023)</li>
+    <li>IMF World Economic Outlook (2025)</li>
+  </ul>
+</div>
+
+<script>
+const red = '#C84B2F';
+const green = '#2E6B3E';
+const blue = '#1E4FA0';
+const amber = '#B5760A';
+const redL = 'rgba(200,75,47,0.15)';
+const greenL = 'rgba(46,107,62,0.15)';
+
+Chart.defaults.font.family = "'DM Sans', sans-serif";
+Chart.defaults.color = '#4A4540';
+
+new Chart(document.getElementById('chart1'), {
+  type: 'bar',
+  data: {
+    labels: ['2023', '2024', '2025', '2026 (partial)'],
+    datasets: [
+      {
+        label: 'PHK terkait AI (ribu)',
+        data: [3.9, 12.7, 55, 32],
+        backgroundColor: red,
+        borderRadius: 4,
+      },
+      {
+        label: 'Pekerjaan AI baru (ribu)',
+        data: [null, 119.9, null, null],
+        backgroundColor: green,
+        borderRadius: 4,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}k` } }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 13 } } },
+      y: {
+        grid: { color: 'rgba(0,0,0,0.06)' },
+        ticks: { callback: v => v + 'k', font: { size: 12 } }
+      }
+    }
+  }
+});
+
+new Chart(document.getElementById('chart2'), {
+  type: 'bar',
+  data: {
+    labels: [
+      'Data entry & admin',
+      'Customer service',
+      'Finance & accounting',
+      'Legal (riset)',
+      'Kreatif dasar',
+      'Healthcare admin',
+      'Software dev (junior)',
+      'Education',
+      'Skilled trades',
+      'Healthcare klinis'
+    ],
+    datasets: [{
+      label: '% tugas terotomasi',
+      data: [92, 78, 63, 54, 48, 42, 38, 24, 14, 11],
+      backgroundColor: [
+        red, red, '#D8502A', '#D8502A', amber, amber,
+        amber, '#5A9E70', green, green
+      ],
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.x}% tugas dapat diotomasi` } }
+    },
+    scales: {
+      x: {
+        max: 100,
+        grid: { color: 'rgba(0,0,0,0.06)' },
+        ticks: { callback: v => v + '%', font: { size: 12 } }
+      },
+      y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+    }
+  }
+});
+
+new Chart(document.getElementById('chart3'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Terdisplasi (92 juta)', 'Tercipta (170 juta)'],
+    datasets: [{
+      data: [92, 170],
+      backgroundColor: [red, green],
+      borderWidth: 0,
+      hoverOffset: 8
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => ` ${ctx.label}: ${ctx.parsed} juta pekerjaan`
+        }
+      }
+    },
+    cutout: '65%',
+    layout: { padding: 20 }
+  }
+});
+</script>
+</body>
+</html>
